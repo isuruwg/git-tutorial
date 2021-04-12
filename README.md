@@ -4,6 +4,9 @@
 - [1. Basics](#1-basics)
   - [1.1. Git states](#11-git-states)
   - [1.2. Initializing a repo](#12-initializing-a-repo)
+  - [1.3. Committing](#13-committing)
+  - [1.4. Viewing log](#14-viewing-log)
+  - [Express commit](#express-commit)
 
 # 1. Basics
 
@@ -22,3 +25,35 @@ git init <repo name>
 git init .
 ```
 
+## 1.3. Committing
+
+```bash
+git commit -m "Message"
+
+# Or open up an editor for typing the commit message by doing:
+git commit
+```
+
+## 1.4. Viewing log
+
+```bash
+git log
+
+# or use git show to get more details
+git show
+```
+
+View all files tracked by git:
+
+```bash
+git ls-files
+```
+
+## Express commit
+
+```bash
+git commit -a
+
+# or with message:
+git commit -am "My commit message"
+```
