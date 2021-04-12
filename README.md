@@ -6,7 +6,9 @@
   - [1.2. Initializing a repo](#12-initializing-a-repo)
   - [1.3. Committing](#13-committing)
   - [1.4. Viewing log](#14-viewing-log)
-  - [Express commit](#express-commit)
+  - [1.5. View all files tracked by git:](#15-view-all-files-tracked-by-git)
+  - [1.6. Express commit](#16-express-commit)
+  - [1.7. Backing out](#17-backing-out)
 
 # 1. Basics
 
@@ -43,13 +45,15 @@ git log
 git show
 ```
 
-View all files tracked by git:
+## 1.5. View all files tracked by git:
 
 ```bash
 git ls-files
 ```
 
-## Express commit
+## 1.6. Express commit
+
+Commit directly without having to do `git add` and then committing:
 
 ```bash
 git commit -a
@@ -57,3 +61,14 @@ git commit -a
 # or with message:
 git commit -am "My commit message"
 ```
+
+## 1.7. Backing out
+
+Following commands can be used to back out of a staged commit:
+
+Let's add some dummy text we want to remove: 
+```bash
+
+```
+
+
