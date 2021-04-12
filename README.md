@@ -66,9 +66,12 @@ git commit -am "My commit message"
 
 Following commands can be used to back out of a staged commit:
 
-Let's add some dummy text we want to remove: 
 ```bash
+git add README.md
+git reset HEAD # This unstages the commit but the README.md stays the same
 
+# If you also want to remove all the changes from the file:
+git checkout -- README.md
 ```
 
 
