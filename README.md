@@ -137,5 +137,25 @@ git checkout -b new-branch-name
 
 ```bash
 git checkout -b newbranch
+```
 
+Do some edits and do:
+
+```bash
+git add .
+git commit -m "edited on new branch"
+```
+Now when you do `git hist` you'll see that the `HEAD` now points to the new branch
+
+```bash
+* a073sda (HEAD -> newbranch) edited on new branch
+* 14asdfb (master) before switching to new branch
+```
+
+Get back to master branch, merge and delete old branch:
+
+```bash
+git checkout master
+git merge newbranch
+git branch -d newbranch
 ```
