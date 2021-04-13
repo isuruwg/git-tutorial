@@ -152,10 +152,11 @@ Now when you do `git hist` you'll see that the `HEAD` now points to the new bran
 * 14asdfb (master) before switching to new branch
 ```
 
-Get back to master branch, merge and delete old branch:
+Get back to master branch, merge (This will do a Fast-forward merge since there are no conflicts and the branches can be easily merged) and delete old branch:
 
 ```bash
 git checkout master
 git merge newbranch
 git branch -d newbranch
 ```
+
