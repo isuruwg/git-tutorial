@@ -185,6 +185,18 @@ git checkout master
 # now change line 180 and commit
 git commit -am "line 180 changed in master"
 ```
+Now let's try to merge with our `very-bad` branch:
 
+```bash
+git merge very-bad
+# this will create a conflict. Let's open the mergetool to resolve
+git mergetool
+```
+Once merge is done, let's commit
+
+```bash
+git add README.md
+git commit -m "Resolving conflict"
+```
 
 
