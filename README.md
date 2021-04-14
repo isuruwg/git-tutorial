@@ -14,8 +14,9 @@
   - [1.10. Comparing differences](#110-comparing-differences)
   - [1.11. Special Markers](#111-special-markers)
     - [1.11.1. HEAD](#1111-head)
-  - [Create and switching branches](#create-and-switching-branches)
-    - [Example workflow](#example-workflow)
+  - [1.12. Create and switching branches](#112-create-and-switching-branches)
+    - [1.12.1. Example workflow](#1121-example-workflow)
+  - [1.13. Conflict resolution](#113-conflict-resolution)
 
 # 1. Basics
 
@@ -126,14 +127,14 @@ git difftool 5432231 HEAD
 - Points to Last Commit of Current Branch
 - Can be moved
 
-## Create and switching branches
+## 1.12. Create and switching branches
 
 ```bash
 # Create new branch and switch
 git checkout -b new-branch-name
 ```
 
-### Example workflow
+### 1.12.1. Example workflow
 
 ```bash
 git checkout -b newbranch
@@ -157,6 +158,22 @@ Get back to master branch, merge (This will do a Fast-forward merge since there 
 ```bash
 git checkout master
 git merge newbranch
+# Delete merged branch
 git branch -d newbranch
 ```
+
+## 1.13. Conflict resolution
+
+Let's create a new branch
+
+```bash
+git checkout -b very-bad
+```
+
+```bash
+# view all branches
+git branch -a
+```
+
+
 
