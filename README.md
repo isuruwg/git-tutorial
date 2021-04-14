@@ -175,5 +175,13 @@ git checkout -b very-bad
 git branch -a
 ```
 
+Let's change a line in the new branch and commit and also change the same line to a different text in the main branch and commit
+
+CHANGED LINE IN VERY-BAD BRANCH
+
+```bash
+git commit -am "line 180 changed in branch"
+```
+
 
 
