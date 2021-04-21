@@ -252,6 +252,13 @@ git stash pop
 
 ## 1.16. Time travel with Reset and Reflog
 
+There are 3 types of `git reset`:
+
+1. `soft`
+2. `mixed` (This is the default)
+3. `hard` 
+
+
 Let's stage some of the changes we have:
 
 ```bash
@@ -269,7 +276,8 @@ Let's look at the `git log` (using the `git hist` alias we saved in setup)
 
 Output:
 ```bash
-* 12a6c5e (HEAD -> master) Updated README using stash
+* 02a4e3f (HEAD -> master) Before git reset
+* 12a6c5e Updated README using stash
 * 974241c Did a change after stash
 * c3adad1 Before stash
 * cede774 Before stashing
@@ -279,6 +287,33 @@ Output:
 Let's do a git reset to commit `c3adad1`
 
 ```bash
-git reset ce2c810 --soft
+# let's do some changes to a file and then do a reset
+git reset c3adad1 --soft
 ```
 
+Now if you do `git status`, you would get:
+
+```bash
+On branch master
+Changes to be committed:
+        modified:   README.md
+
+Changes not staged for commit:
+        modified:   README.md
+```
+
+And if we do `git log --oneline --graph --decorate --all`  ( `git hist` alias ), we get:
+
+```bash
+* c3adad1 (HEAD -> master) Before stash
+* cede774 Before stashing
+```
+
+We can see that the soft reset simply moved the `HEAD` to a different location but kept our staging and all our files (Including the ones that were not staged) intact.
+
+Now let's get back to our latest commit and also commit the new changes before we try the other types of `reset`
+
+
+```bash
+git reset 02a4e3f --soft  
+```
