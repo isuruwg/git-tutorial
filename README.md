@@ -241,4 +241,8 @@ git stash
 git stash list
 ```
 
+<<<<<<< Updated upstream
 Now let's do some change to the [README.md](README.md) file.
+=======
+Some change
+>>>>>>> Stashed changes
