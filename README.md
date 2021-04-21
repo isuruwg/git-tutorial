@@ -19,6 +19,7 @@
   - [1.13. Conflict resolution](#113-conflict-resolution)
   - [1.14. Tagging](#114-tagging)
   - [1.15. Stashing](#115-stashing)
+  - [1.16. Time travel with Reset and Reflog](#116-time-travel-with-reset-and-reflog)
 
 # 1. Basics
 
@@ -241,8 +242,43 @@ git stash
 git stash list
 ```
 
-<<<<<<< Updated upstream
-Now let's do some change to the [README.md](README.md) file.
-=======
-Some change
->>>>>>> Stashed changes
+Now let's do some change to the [README.md](README.md) file and then commit the changes.
+
+```bash
+git commit -am "Changed after stashing"
+# Now let's get the changes from the stash:
+git stash pop
+```
+
+## 1.16. Time travel with Reset and Reflog
+
+Let's stage some of the changes we have:
+
+```bash
+git add .
+
+git status
+
+# Output
+On branch master
+Changes to be committed:
+        modified:   README.md
+```
+
+Let's look at the `git log` (using the `git hist` alias we saved in setup)
+
+Output:
+```bash
+* 12a6c5e (HEAD -> master) Updated README using stash
+* 974241c Did a change after stash
+* c3adad1 Before stash
+* cede774 Before stashing
+........
+```
+
+Let's do a git reset to commit `c3adad1`
+
+```bash
+git reset ce2c810 --soft
+```
+
