@@ -20,6 +20,9 @@
   - [1.14. Tagging](#114-tagging)
   - [1.15. Stashing](#115-stashing)
   - [1.16. Time travel with Reset and Reflog](#116-time-travel-with-reset-and-reflog)
+    - [1.16.1. soft reset](#1161-soft-reset)
+    - [1.16.2. mixed reset](#1162-mixed-reset)
+    - [1.16.3. hard reset](#1163-hard-reset)
 
 # 1. Basics
 
@@ -258,7 +261,7 @@ There are 3 types of `git reset`:
 2. `mixed` (This is the default)
 3. `hard` 
 
-
+### 1.16.1. soft reset
 Let's stage some of the changes we have:
 
 ```bash
@@ -311,9 +314,49 @@ And if we do `git log --oneline --graph --decorate --all`  ( `git hist` alias ),
 
 We can see that the soft reset simply moved the `HEAD` to a different location but kept our staging and all our files (Including the ones that were not staged) intact.
 
+### 1.16.2. mixed reset
+
 Now let's get back to our latest commit and also commit the new changes before we try the other types of `reset`
 
+```bash
+git hist
+# Outputs:
+* 17d6ca0 (HEAD -> master) Before mixed reset
+* 02a4e3f Before git reset
+* 12a6c5e Updated README using stash
+```
 
 ```bash
 git reset 02a4e3f --soft  
+```
+
+Now let's do some change and add it to our staging `git add .` and also do some more changes and do a git reset:
+
+```bash
+# --mixed can be omitted below since it's the default
+git reset 02a4e3f --mixed
+```
+
+Now if we look at `git status` we would get:
+
+```bash
+On branch master
+Changes not staged for commit:
+        modified:   README.md
+```
+
+```bash
+git hist
+# Now outputs:
+* 02a4e3f (HEAD -> master) Before git reset
+* 12a6c5e Updated README using stash
+```
+
+### 1.16.3. hard reset
+
+Now let's commit our changes before doing a hard reset
+
+```bash
+git reset 17d6ca0
+git commit -am "Before hard reset"
 ```
