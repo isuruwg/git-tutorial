@@ -17,6 +17,8 @@
   - [1.12. Create and switching branches](#112-create-and-switching-branches)
     - [1.12.1. Example workflow](#1121-example-workflow)
   - [1.13. Conflict resolution](#113-conflict-resolution)
+  - [1.14. Tagging](#114-tagging)
+  - [1.15. Stashing](#115-stashing)
 
 # 1. Basics
 
@@ -199,4 +201,20 @@ git add README.md
 git commit -m "Resolving conflict"
 ```
 
+You might see a `README.md.orig` file after this. You can add `*.orig` to [.gitignore](.gitignore) to prevent adding these files accidentally to the repo. You can delete the `.orig` file by `rm README.md.orig`
+
+## 1.14. Tagging
+
+There are two types of tags
+
+1. Lightweight tags `git tag v1`
+2. Annotated tags `git tag -a v1 -m "my new version"` or, `git tag -a v1` would launch an editor to type the tag message.
+
+A tag can be deleted by `git tag -d v1`
+
+List all tags by `git tag --list`
+
+Show tag information `git show v1`
+
+## 1.15. Stashing
 
