@@ -218,3 +218,26 @@ Show tag information `git show v1`
 
 ## 1.15. Stashing
 
+Let's say we edited some code but don't want to commit the code. And want to change over to another branch or change context and work on something else for a while, we can do that by using `git stash` command.
+
+Let's check our current status: 
+
+```bash
+git status
+# Output:
+On branch master
+Changes not staged for commit:
+        modified:   README.md
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+And let's say we want to change to a new branch but don't want to commit the changes we did yet.
+
+So we'll do:
+
+```bash
+git stash
+# Let's now list the stashes:
+git stash list
+```
+
