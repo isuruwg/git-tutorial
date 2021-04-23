@@ -23,6 +23,7 @@
     - [1.16.1. soft reset](#1161-soft-reset)
     - [1.16.2. mixed reset](#1162-mixed-reset)
     - [1.16.3. hard reset](#1163-hard-reset)
+- [2. GitHub](#2-github)
 
 # 1. Basics
 
@@ -360,3 +361,37 @@ Now let's commit our changes before doing a hard reset
 git reset 17d6ca0
 git commit -am "Before hard reset"
 ```
+
+```bash
+git hist
+* e6a5b8b (HEAD -> master) Before hard reset
+* 17d6ca0 Before mixed reset
+* 02a4e3f Before git reset
+```
+Now let's do a hard reset:
+
+```bash
+git reset 17d6ca0 --hard
+```
+
+Now let's do `git reflog`, this shows a log of when tips of branches and other references were updated in the local repository:
+
+```bash
+# git reflog output:
+17d6ca0 (HEAD -> master) HEAD@{0}: reset: moving to 17d6ca0
+e6a5b8b HEAD@{1}: commit: Before hard reset
+```
+
+Now let's move back to our previous commit by: `git reset e6a5b8b`. You have to be careful with `git reset --hard` because any uncommited changes would be lost after a hard reset.
+
+# 2. GitHub
+
+Let's create a new empty GitHub repo and do:
+
+```bash
+git remote add origin git@github.com:isuruwg/git-tutorial.git
+git branch -M main
+git push -u origin main --tags
+```
+
+Let's do `git remote -v` command to check if our remote was added properly
