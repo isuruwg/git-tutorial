@@ -23,7 +23,16 @@
     - [1.16.1. soft reset](#1161-soft-reset)
     - [1.16.2. mixed reset](#1162-mixed-reset)
     - [1.16.3. hard reset](#1163-hard-reset)
+  - [1.17. Removing sensitive files from git repo](#117-removing-sensitive-files-from-git-repo)
 - [2. GitHub](#2-github)
+  - [2.1. Fetch and Pull](#21-fetch-and-pull)
+  - [2.2. Resolving conflicts](#22-resolving-conflicts)
+  - [2.3. Merge locally](#23-merge-locally)
+  - [2.4. Removing branches](#24-removing-branches)
+    - [2.4.1. Deleting on GitHub web interface first](#241-deleting-on-github-web-interface-first)
+    - [2.4.2. Deleting on local first](#242-deleting-on-local-first)
+  - [2.5. Pull with rebase](#25-pull-with-rebase)
+  - [2.6. Tags and releases](#26-tags-and-releases)
 
 # 1. Basics
 
@@ -384,6 +393,53 @@ e6a5b8b HEAD@{1}: commit: Before hard reset
 
 Now let's move back to our previous commit by: `git reset e6a5b8b`. You have to be careful with `git reset --hard` because any uncommited changes would be lost after a hard reset.
 
+## 1.17. Removing sensitive files from git repo
+
+If you've accidentally added a sensitive file to a git repo and you would like to remove it from the git history, you can follow the following steps: (NOTE: Please treat any information you have accidentally commited as compromised even if you remove them from the git repo. eg: if you commited a password, please change it)
+
+[[Reference](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)]
+
+```bash
+# Install git-filter-repo
+python -m venv venv
+. ./venv/bin/activate
+pip install git-filter-repo
+# I used pip install git-filter-repo , you can also use any of the methods mentioned
+# here: https://github.com/newren/git-filter-repo/blob/main/INSTALL.md
+
+# Do a fresh clone
+git clone git@github.com:USERNAME/YOUR-REPO-NAME.git
+
+# Remove the file
+git filter-repo --invert-paths --path PATH-TO-YOUR-FILE-WITH-SENSITIVE-DATA
+
+# Add file to gitignore
+echo "YOUR-FILE-WITH-SENSITIVE-DATA" >> .gitignore
+
+git add .gitignore
+git commit -m "Add YOUR-FILE-WITH-SENSITIVE-DATA to .gitignore"
+```
+
+**Important Note:** git-filter-repo removes the origin url from your repo. This is done for a reason as discussed [here](https://htmlpreview.github.io/?https://github.com/newren/git-filter-repo/blob/docs/html/git-filter-repo.html#DISCUSSION) and [here](https://github.com/newren/git-filter-repo/issues/46#issuecomment-573733491).
+
+**Please do not do the following steps blindly if you are working on a repo with multiple people working on it(as is the case most of the time). Please read the discussion above and follow the appropriate steps**
+
+```bash
+# The recommended method is to create a new repo and push your changes instead of using the old repo as this can avoid issues. But, if you really want to use the same remote repo that you started with, please make sure you communicate with everyone else who is working on your project about these changes.
+
+# git-filter-repo removes the origin url, add a remote for a NEW repo
+git remote add origin git@github.com:USERNAME/YOUR-NEW-REPO-NAME.git
+
+#verify
+git remote -v
+
+
+git push origin --force --all
+
+# If you have tagged releases too with sensitive files
+git push origin --force --tags
+```
+
 # 2. GitHub
 
 Let's create a new empty GitHub repo and do:
@@ -394,4 +450,86 @@ git branch -M main
 git push -u origin main --tags
 ```
 
-Let's do `git remote -v` command to check if our remote was added properly
+Let's do `git remote -v` command to check if our remote was added properly.
+
+## 2.1. Fetch and Pull
+
+`git pull` is the combination of two commands, `git fetch` and `git merge`. Git will first fetch all the changes from the remote repo and then merge them onto our local.
+
+You can do a `git fetch` first instead of doing `git pull` if you are unsure about the status of the remote. Then you can merge by doing a `git pull` command. Then you can do a `git push`
+
+It's advised to do a `git fetch` or `git pull` before doing a `git push` if you are working on a repo with multiple people.
+
+## 2.2. Resolving conflicts
+
+Conflicts occuring because the remote and local having diverged can be resolved by using a mergetool. Use, `git mergetool` command to launch merge tool. After merging is done, do a git commit.
+
+## 2.3. Merge locally
+
+You can switch to the branch you want to merge into (eg: `main`) and then do `git merge <branch-name>` where `<branch-name>` is the name of the branch you want to merge into your current branch.
+
+## 2.4. Removing branches
+
+Let's call the branch we want to delete `branch1`
+
+### 2.4.1. Deleting on GitHub web interface first
+
+You can remove `branch1` on GitHub using the GitHub web interface. Once it's done, on your local shell do:
+
+```bash
+git branch -a
+```
+You would still see `branch1` and `remotes/origin/branch1` on your local.
+
+```bash
+# Let's delete the local
+git branch -d branch1
+
+# Update stale references by doing git fetch with the prune option
+git fetch -p
+# This will remove the remote/origin/branch1 reference.
+```
+
+### 2.4.2. Deleting on local first
+
+```bash
+# Delete local
+git branch -d branch1
+
+# Delete on origin
+git push origin :branch1
+```
+
+## 2.5. Pull with rebase
+
+From a content perspective, rebasing is changing the base of your branch from one commit to another making it appear as if you'd created your branch from a different commit. Internally, Git accomplishes this by creating new commits and applying them to the specified base.[[ref](https://www.atlassian.com/git/tutorials/rewriting-history/git-rebase)]
+
+## 2.6. Tags and releases
+
+```bash
+# List all tags
+git tag
+
+# Create simple tag
+git tag <tag_name>
+
+# Create annotated tag
+git tag -a <tag_name> -m "description" <Optional_Commit_ID>
+
+# view tag and commit information
+git show <tag_name>
+
+# Push specific tags to remote
+git push origin <tag_name>
+
+# Push all tags to remote
+git push --tags
+
+# Delete tag on local
+git tag -d <tag_name>
+
+# Delete tag on remote. DON'T forget the : in the command below
+git push origin :<tag_name>
+```
+
+
