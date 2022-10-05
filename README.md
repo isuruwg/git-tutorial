@@ -1,5 +1,6 @@
 # Git tutorial <!-- omit in toc -->
-# TOC <!-- omit in toc -->
+
+# Contents <!-- omit in toc -->
 
 - [1. Basics](#1-basics)
   - [1.1. Git states](#11-git-states)
@@ -114,6 +115,21 @@ git config --global --list
 git hist -- README.md
 ```
 
+You can also set the following aliases to get different versions of pretty history: 
+
+```bash
+git config --global alias.hist2 "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
+
+git config --global alias.hist3 "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all"
+```
+
+Or you can add the following to `~/.gitconfig`
+```
+[alias]
+        hist = log --oneline --graph --decorate --all
+        hist2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+        hist3 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+```
 ## 1.9. Rename and delete files
 
 ```bash
